@@ -1,3 +1,4 @@
+import Date from "@/components/Date";
 import FeaturedImage from "@/components/FeaturedImage";
 import Footer from "@/components/Footer";
 import SiteHeader from "@/components/SiteHeader";
@@ -6,7 +7,7 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
   const allPosts = await getAllPosts();
   return {
     props: {
@@ -14,6 +15,7 @@ export async function getStaticProps(context) {
     }, // will be passed to the page component as props
   };
 }
+
 export default function Blog({ allPosts }) {
   return (
     <>
@@ -52,7 +54,9 @@ export default function Blog({ allPosts }) {
                       {post.title}
                     </Link>
                   </h2>
-
+                  <div className="py-4">
+                    Published on <Date dateString={post.date} />
+                  </div>
                   <div
                     className="text-lg"
                     dangerouslySetInnerHTML={{ __html: post.excerpt }}
