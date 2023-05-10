@@ -1,4 +1,5 @@
 import Date from "@/components/Date";
+import Footer from "@/components/Footer";
 import SiteHeader from "@/components/SiteHeader";
 import { getPostSlugs, getSinglePost } from "@/lib/posts";
 import Head from "next/head";
