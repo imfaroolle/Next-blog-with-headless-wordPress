@@ -1,14 +1,15 @@
 import Date from "@/components/Date";
 import FeaturedImage from "@/components/FeaturedImage";
 import Footer from "@/components/Footer";
+import LoadMore from "@/components/LoadMore";
 import SiteHeader from "@/components/SiteHeader";
-import { getAllPosts } from "@/lib/posts";
+import { getPostsList } from "@/lib/posts";
 import Head from "next/head";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export async function getStaticProps() {
-  const allPosts = await getAllPosts();
+  const allPosts = await getPostsList();
   return {
     props: {
       allPosts: allPosts,
@@ -17,6 +18,8 @@ export async function getStaticProps() {
 }
 
 export default function Blog({ allPosts }) {
+  const [posts, setposts] = useState(allPosts);
+
   return (
     <>
       <Head>
@@ -40,7 +43,7 @@ export default function Blog({ allPosts }) {
       <main>
         <section className="container mx-auto lg:max-w-5xl post-list mt-4">
           <ul>
-            {allPosts.nodes.map((post) => (
+            {posts.nodes.map((post) => (
               <li key={post.slug} className="grid grid-cols-5 gap-4 mb-4 ">
                 <div className="col-span-2 ">
                   <FeaturedImage post={post} />
@@ -77,6 +80,8 @@ export default function Blog({ allPosts }) {
               </li>
             ))}
           </ul>
+
+          <LoadMore posts={posts} setposts={setposts} />
         </section>
       </main>
 
